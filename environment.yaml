@@ -1,0 +1,10 @@
+name: ieee
+
+dependencies:
+  - python=3.6
+  - jupyterlab
+  - nodejs
+  - pip
+    - neptune-client
+    - neptune-notebooks
+    - neptune-contrib
