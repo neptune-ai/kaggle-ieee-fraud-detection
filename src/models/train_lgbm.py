@@ -4,6 +4,7 @@ import lightgbm as lgb
 import neptune
 from neptunecontrib.monitoring.lightgbm import neptune_monitor
 from neptunecontrib.versioning.data import log_data_version
+from neptunecontrib.api.utils import get_filepaths
 from neptunecontrib.monitoring.reporting import send_binary_classification_report
 import numpy as np
 import pandas as pd
@@ -17,9 +18,9 @@ FEATURE_NAME = 'v0'
 PREDICTION_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions/'
 SUBMISSION_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'
 MODEL_NAME = 'lgbm'
-NROWS = None
+NROWS = 100000
 
-VALIDATION_PARAMS = {'seed': 1234,
+VALIDATION_PARAMS = {'validation_seed': 1234,
                      'validation_schema': 'kfold',
                      'n_splits': 5}
 
@@ -36,10 +37,11 @@ MODEL_PARAMS = {'num_leaves': 256,
                 "verbosity": -1,
                 'reg_alpha': 0.3,
                 'reg_lambda': 0.3,
-                'colsample_bytree': 0.9
+                'colsample_bytree': 0.9,
+                'seed': 1234
                 }
 
-TRAINING_PARAMS = {'nrows':NROWS,
+TRAINING_PARAMS = {'nrows': NROWS,
                    'num_boosting_rounds': 5000,
                    'early_stopping_rounds': 200
                    }
@@ -88,13 +90,14 @@ if __name__ == '__main__':
     X_test = test.sort_values('TransactionDT').drop(['TransactionDT', 'TransactionID'], axis=1)
     test = test[["TransactionDT", 'TransactionID']]
 
-    folds = KFold(n_splits=VALIDATION_PARAMS['n_splits'], random_state=VALIDATION_PARAMS['seed'])
+    folds = KFold(n_splits=VALIDATION_PARAMS['n_splits'], random_state=VALIDATION_PARAMS['validation_seed'])
 
     hyperparams = {**MODEL_PARAMS, **TRAINING_PARAMS, **VALIDATION_PARAMS}
 
     print('starting experiment')
     with neptune.create_experiment(name='model training',
                                    params=hyperparams,
+                                   upload_source_files=get_filepaths(),
                                    tags=[MODEL_NAME, 'features_'.format(FEATURE_NAME), 'training']):
         print('logging data version')
         log_data_version(train_features_path, prefix='train_features_')

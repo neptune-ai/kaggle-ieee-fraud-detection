@@ -60,6 +60,13 @@ or
 conda deactivate 
 ```
 
+Set your environment variables for `NEPTUNE_API_TOKEN` and `NEPTUNE_PROJECT` by running:
+
+```bash
+export NEPTUNE_API_TOKEN=go_to_neptune_app_and_get_your_token
+export NEPTUNE_PROJECT=USER_NAME/PROJECT_NAME
+```
+
 ## Running code
 
 ### Feature extraction
