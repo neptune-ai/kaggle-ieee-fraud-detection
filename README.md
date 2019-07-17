@@ -45,8 +45,8 @@ By running:
 source make_project
 ```
 
-you can create a conda environment with all the packages required. 
-Also it will create data folder and subdirectories for raw data, extracted features and predictions.
+conda environment with all the packages required will be created. 
+Also, it will create `data` folder and subdirectories for `raw` data, extracted `features` and `predictions`.
 
 From now on you can activate or deactivate your conda environment by running:
 
