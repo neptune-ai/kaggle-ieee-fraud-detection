@@ -4,20 +4,22 @@ It is build following the [cookie-cutter data science project structure](https:/
 
 This project shows how you can organize your work by tracking:
 - data/feature versions
-![image1]()
+![image1](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_properties.png)
 - hyperparameters
-![image2]()
+![image2](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_parameters.png)
 - metrics
-![image3]()
+![image3](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_metrics.png)
 - diagnostic charts like confusion matrix, roc auc curve, or prediction distributions 
-![image4]()
+![image4](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_images.png)
 - prediction artifacts 
-![image5]()
+![image5](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_artifacts.png)
 - environment
-![image6]()
+![image6](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_environment.png)
+- code
+![image7](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_code.png)
 
 As an added bonus you can learn how to add live monitoring for lightgbm model.
-![image7]()
+![image8](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_charts.png)
 
 And the best part is that all of those experiments can be shared and discussed with everyone you want in Neptune.
 
