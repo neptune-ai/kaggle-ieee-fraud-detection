@@ -1,0 +1,20 @@
+name: ieee
+
+channels:
+  - defaults
+
+dependencies:
+  - python=3.6.8
+  - pip=19.1.1=py36_0
+  - seaborn
+  - psutil
+  - lightgbm
+  - pandas
+  - jupyterlab=0.35
+  - nodejs
+
+  - pip:
+    - neptune-client==0.3.0
+    - neptune-contrib==0.9.1
+    - neptune-notebooks==0.0.6
+

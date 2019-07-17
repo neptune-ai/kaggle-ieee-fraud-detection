@@ -17,7 +17,7 @@ FEATURE_NAME = 'v0'
 PREDICTION_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions/'
 SUBMISSION_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'
 MODEL_NAME = 'lgbm'
-NROWS = 10000
+NROWS = None
 
 VALIDATION_PARAMS = {'seed': 1234,
                      'validation_schema': 'kfold',
@@ -39,8 +39,9 @@ MODEL_PARAMS = {'num_leaves': 256,
                 'colsample_bytree': 0.9
                 }
 
-TRAINING_PARAMS = {'num_boosting_rounds': 10,
-                   'early_stopping_rounds': 10
+TRAINING_PARAMS = {'nrows':NROWS,
+                   'num_boosting_rounds': 5000,
+                   'early_stopping_rounds': 200
                    }
 
 
@@ -77,13 +78,13 @@ if __name__ == '__main__':
     test_features_path = os.path.join(FEATURES_DATA_PATH, 'test_features_' + FEATURE_NAME + '.csv')
 
     print('... train')
-    train = pd.read_csv(train_features_path, nrows=NROWS)
+    train = pd.read_csv(train_features_path, nrows=TRAINING_PARAMS['nrows'])
     X = train.sort_values('TransactionDT').drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
     y = train.sort_values('TransactionDT')['isFraud']
     train = train[["TransactionDT", 'TransactionID']]
 
     print('... test')
-    test = pd.read_csv(test_features_path, nrows=NROWS)
+    test = pd.read_csv(test_features_path, nrows=TRAINING_PARAMS['nrows'])
     X_test = test.sort_values('TransactionDT').drop(['TransactionDT', 'TransactionID'], axis=1)
     test = test[["TransactionDT", 'TransactionID']]
 
