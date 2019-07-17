@@ -1,5 +1,25 @@
 # kaggle-ieee-fraud-detection
-Example of a project with experiment management.
+Example of a project with Neptune experiment management.
+It is build following the [cookie-cutter data science project structure](https://github.com/drivendata/cookiecutter-data-science).
+
+This project shows how you can organize your work by tracking:
+- data/feature versions
+![image1]()
+- hyperparameters
+![image2]()
+- metrics
+![image3]()
+- diagnostic charts like confusion matrix, roc auc curve, or prediction distributions 
+![image4]()
+- prediction artifacts 
+![image5]()
+- environment
+![image6]()
+
+As an added bonus you can learn how to add live monitoring for lightgbm model.
+![image7]()
+
+And the best part is that all of those experiments can be shared and discussed with everyone you want in Neptune.
 
 ## Installation
 By running:
