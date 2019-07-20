@@ -6,11 +6,14 @@ from neptunecontrib.api.utils import get_filepaths
 import pandas as pd
 
 from const import V0_CAT_COLS
+from src.utils import read_config
 
-neptune.init()
+CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
-RAW_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/'
-FEATURES_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/features/'
+neptune.init(project_qualified_name=CONFIG.project)
+
+RAW_DATA_PATH = CONFIG.data.raw_data_path
+FEATURES_DATA_PATH = CONFIG.data.features_data_path
 FEATURE_NAME = 'v0'
 NROWS = None
 

@@ -9,13 +9,16 @@ from neptunecontrib.monitoring.reporting import send_binary_classification_repor
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
+from src.utils import read_config
 
-neptune.init()
+CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
-FEATURES_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/features/'
+neptune.init(project_qualified_name=CONFIG.project)
+
+FEATURES_DATA_PATH = CONFIG.data.features_data_path
+PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
+SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
-PREDICTION_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions/'
-SUBMISSION_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'
 MODEL_NAME = 'lgbm'
 NROWS = 100000
 SEED = 1234
@@ -133,7 +136,7 @@ if __name__ == '__main__':
                                              'test_prediction_{}_{}.csv'.format(FEATURE_NAME, MODEL_NAME))
         submission_path = os.path.join(PREDICTION_DATA_PATH,
                                        'submission_{}_{}.csv'.format(FEATURE_NAME, MODEL_NAME))
-        submission = pd.read_csv(SUBMISSION_PATH)
+        submission = pd.read_csv(SAMPLE_SUBMISSION_PATH)
 
         valid = pd.concat([valid, pd.DataFrame(valid[["TransactionDT", 'TransactionID']], columns=['prediction'])],
                           axis=1)
