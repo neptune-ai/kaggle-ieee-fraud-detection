@@ -12,16 +12,15 @@ CONFIG_NAME = 'kaggle_config.yml'
 print('cloning the repository')
 subprocess.call(['git', 'clone', REPO_LOCATION])
 
-print('adding repository src to path')
-sys.path.append(REPO_NAME)
-
 # Install packages
 print('installing packages')
 subprocess.call(['pip', 'install'] + PACKAGES)
 
+# Setting env variables
 print('setting environment variables')
 os.environ["CONFIG_PATH"] = os.path.join(REPO_NAME, CONFIG_NAME)
 os.environ["NEPTUNE_API_TOKEN"] = NEPTUNE_API_TOKEN
+sys.path.append(REPO_NAME)
 
 # Feature extraction
 # print('extracting features')
