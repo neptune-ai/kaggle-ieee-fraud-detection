@@ -31,6 +31,3 @@ sys.path.append(REPO_NAME)
 from src.models import train_lgbm_holdout
 print('training model')
 train_lgbm_holdout.main()
-
-
-
