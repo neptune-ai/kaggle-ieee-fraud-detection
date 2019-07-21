@@ -77,7 +77,7 @@ def fmt_preds(y_pred):
     return np.concatenate((1.0 - y_pred.reshape(-1, 1), y_pred.reshape(-1, 1)), axis=1)
 
 
-if __name__ == '__main__':
+def main():
     print('loading data')
     train_features_path = os.path.join(FEATURES_DATA_PATH, 'train_features_' + FEATURE_NAME + '.csv')
     test_features_path = os.path.join(FEATURES_DATA_PATH, 'test_features_' + FEATURE_NAME + '.csv')
@@ -134,3 +134,7 @@ if __name__ == '__main__':
         neptune.send_artifact(test_predictions_path)
         neptune.send_artifact(submission_path)
         print('experiment finished')
+
+
+if __name__ == '__main__':
+    main()

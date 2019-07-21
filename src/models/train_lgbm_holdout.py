@@ -89,7 +89,7 @@ def fmt_preds(y_pred):
     return np.concatenate((1.0 - y_pred.reshape(-1, 1), y_pred.reshape(-1, 1)), axis=1)
 
 
-if __name__ == '__main__':
+def main():
     print('loading data')
     train_features_path = os.path.join(FEATURES_DATA_PATH, 'train_features_' + FEATURE_NAME + '.csv')
     test_features_path = os.path.join(FEATURES_DATA_PATH, 'test_features_' + FEATURE_NAME + '.csv')
@@ -143,10 +143,14 @@ if __name__ == '__main__':
         test = pd.concat([test[["TransactionDT", 'TransactionID']], pd.DataFrame(test_preds, columns=['prediction'])],
                          axis=1)
         submission['isFraud'] = pd.merge(submission, test, on='TransactionID')['prediction']
-        train.to_csv(valid_predictions_path, index=None)
+        valid.to_csv(valid_predictions_path, index=None)
         test.to_csv(test_predictions_path, index=None)
         submission.to_csv(submission_path, index=None)
         neptune.send_artifact(valid_predictions_path)
         neptune.send_artifact(test_predictions_path)
         neptune.send_artifact(submission_path)
         print('experiment finished')
+
+
+if __name__ == '__main__':
+    main()

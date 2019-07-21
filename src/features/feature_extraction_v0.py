@@ -80,13 +80,12 @@ def drop_existing_cols(df, cols):
     return df.drop(existing_cols, axis=1)
 
 
-if __name__ == '__main__':
+def main():
     print('started experimnent')
     with neptune.create_experiment(name='feature engineering',
                                    tags=['feature-extraction', FEATURE_NAME],
                                    upload_source_files=get_filepaths(),
                                    properties={'feature_version': FEATURE_NAME}):
-
         cols_to_drop = V0_CAT_COLS
         for split_name in ['train', 'test']:
             print('processing {}'.format(split_name))
@@ -97,3 +96,7 @@ if __name__ == '__main__':
             features_path = os.path.join(FEATURES_DATA_PATH, '{}_features_{}.csv'.format(split_name, FEATURE_NAME))
             features.to_csv(features_path, index=None)
             log_data_version(features_path, prefix='{}_features_'.format(split_name))
+
+
+if __name__ == '__main__':
+    main()
