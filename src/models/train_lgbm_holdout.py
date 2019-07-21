@@ -12,6 +12,7 @@ from sklearn.metrics import roc_auc_score
 from src.utils import read_config
 
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
+print(CONFIG)
 
 neptune.init(project_qualified_name=CONFIG.project)
 
