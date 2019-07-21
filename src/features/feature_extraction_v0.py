@@ -6,8 +6,9 @@ from neptunecontrib.api.utils import get_filepaths
 import pandas as pd
 
 from const import V0_CAT_COLS
-from src.utils import read_config
+from src.utils import read_config, check_env_vars
 
+check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
 neptune.init(project_qualified_name=CONFIG.project)

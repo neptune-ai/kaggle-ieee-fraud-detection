@@ -9,8 +9,9 @@ from neptunecontrib.monitoring.reporting import send_binary_classification_repor
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
-from src.utils import read_config
+from src.utils import read_config, check_env_vars
 
+check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
 neptune.init(project_qualified_name=CONFIG.project)
@@ -20,7 +21,7 @@ PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
 SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
 MODEL_NAME = 'lgbm'
-NROWS = 100000
+NROWS = None
 SEED = 1234
 
 VALIDATION_PARAMS = {'validation_schema': 'holdout',
@@ -58,7 +59,7 @@ def fit_predict(train, valid, test, model_params, training_params):
     X_valid = valid.drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
     y_valid = valid['isFraud']
 
-    X_test = test.drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
+    X_test = test.drop(['TransactionDT', 'TransactionID'], axis=1)
 
     trn_data = lgb.Dataset(X_train, y_train)
     val_data = lgb.Dataset(X_valid, y_valid)
@@ -103,11 +104,9 @@ def main():
     idx_split = int((1 - VALIDATION_PARAMS['validation_fraction']) * len(train))
     train, valid = train[:idx_split], train[idx_split:]
 
-    print(train.columns)
     train = sample_negative_class(train,
                                   fraction=TRAINING_PARAMS['negative_sample_fraction'],
                                   seed=TRAINING_PARAMS['negative_sample_seed'])
-    print(train.columns)
 
     hyperparams = {**MODEL_PARAMS, **TRAINING_PARAMS, **VALIDATION_PARAMS}
 

@@ -6,7 +6,7 @@ REPO_LOCATION = 'https://github.com/neptune-ml/kaggle-ieee-fraud-detection.git'
 REPO_NAME = 'kaggle-ieee-fraud-detection'
 PACKAGES = ['neptune-client', 'neptune-contrib']
 NEPTUNE_API_TOKEN = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vdWkubmVwdHVuZS5tbCIsImFwaV9rZXkiOiJiNzA2YmM4Zi03NmY5LTRjMmUtOTM5ZC00YmEwMzZmOTMyZTQifQ=='
-CONFIG_NAME = 'kaggle_config.yml'
+CONFIG_NAME = 'config_kaggle.yml'
 
 # Clone the repository
 print('cloning the repository')

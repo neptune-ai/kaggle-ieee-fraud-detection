@@ -10,8 +10,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
-from src.utils import read_config
+from src.utils import read_config, check_env_vars
 
+check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
 neptune.init(project_qualified_name=CONFIG.project)
@@ -21,7 +22,7 @@ PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
 SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
 MODEL_NAME = 'lgbm'
-NROWS = 100000
+NROWS = None
 
 VALIDATION_PARAMS = {'validation_seed': 1234,
                      'validation_schema': 'kfold',

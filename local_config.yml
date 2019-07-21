@@ -1,7 +1,0 @@
-project: jakub-czakon/
-
-data:
-  raw_data_path: '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/'
-  features_data_path: '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/features/'
-  prediction_data_path: '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions/'
-  submission_path: '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'
