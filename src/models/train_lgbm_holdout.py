@@ -103,9 +103,11 @@ def main():
     idx_split = int((1 - VALIDATION_PARAMS['validation_fraction']) * len(train))
     train, valid = train[:idx_split], train[idx_split:]
 
+    print(train.columns)
     train = sample_negative_class(train,
                                   fraction=TRAINING_PARAMS['negative_sample_fraction'],
                                   seed=TRAINING_PARAMS['negative_sample_seed'])
+    print(train.columns)
 
     hyperparams = {**MODEL_PARAMS, **TRAINING_PARAMS, **VALIDATION_PARAMS}
 
