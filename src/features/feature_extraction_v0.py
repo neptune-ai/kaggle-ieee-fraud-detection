@@ -5,7 +5,7 @@ from neptunecontrib.versioning.data import log_data_version
 from neptunecontrib.api.utils import get_filepaths
 import pandas as pd
 
-from const import V0_CAT_COLS
+from src.features.const import V0_CAT_COLS
 from src.utils import read_config, check_env_vars
 
 check_env_vars()
