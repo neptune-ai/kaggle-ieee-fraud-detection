@@ -3,10 +3,10 @@ import os
 import neptune
 from neptunecontrib.versioning.data import log_data_version
 from neptunecontrib.api.utils import get_filepaths
-import pandas as pd
 
 from src.features.const import V0_CAT_COLS
 from src.utils import read_config, check_env_vars
+from src.features.utils import load_and_merge
 
 check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
@@ -17,13 +17,6 @@ RAW_DATA_PATH = CONFIG.data.raw_data_path
 FEATURES_DATA_PATH = CONFIG.data.features_data_path
 FEATURE_NAME = 'v0'
 NROWS = None
-
-
-def load_and_merge(raw_data_path, split_name, nrows):
-    identity = pd.read_csv('{}/{}_identity.csv'.format(raw_data_path, split_name), nrows=nrows)
-    transaction = pd.read_csv('{}/{}_transaction.csv'.format(raw_data_path, split_name), nrows=nrows)
-    data = pd.merge(transaction, identity, on='TransactionID', how='left')
-    return data
 
 
 def feature_engineering_v0(df):
