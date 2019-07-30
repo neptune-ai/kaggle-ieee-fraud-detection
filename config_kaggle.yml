@@ -1,4 +1,4 @@
-project: shared/showroom
+project: jakub-czakon/ieee-fraud-detection
 
 data:
 #  raw_data_path: '../input/ieee-fraud-detection'
