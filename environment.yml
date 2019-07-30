@@ -15,5 +15,6 @@ dependencies:
     - neptune-notebooks==0.0.6
     - kaggle==1.5.4
     - category_encoders
+    - pandarallel
 
 
