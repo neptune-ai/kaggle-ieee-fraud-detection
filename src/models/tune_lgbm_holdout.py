@@ -19,11 +19,11 @@ STATIC_PARAMS = {'objective': 'binary',
                  'seed': 1234
                  }
 
-HPO_PARAMS = {'n_calls': 100,
-              'n_random_starts': 10,
+HPO_PARAMS = {'n_calls': 1000,
+              'n_random_starts': 30,
               'base_estimator': 'ET',
               'acq_func': 'EI',
-              'xi': 0.02,
+              'xi': 0.01,
               'kappa': 1.96,
               'n_points': 10000,
               }
