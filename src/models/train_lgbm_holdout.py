@@ -9,7 +9,9 @@ from neptunecontrib.monitoring.reporting import send_binary_classification_repor
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
+
 from src.utils import read_config, check_env_vars
+from src.models.utils import sample_negative_class
 
 check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
@@ -21,7 +23,7 @@ PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
 SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
 MODEL_NAME = 'lgbm'
-NROWS = None
+NROWS = 50000
 SEED = 1234
 
 VALIDATION_PARAMS = {'validation_schema': 'holdout',
@@ -52,38 +54,34 @@ TRAINING_PARAMS = {'nrows': NROWS,
                    }
 
 
-def fit_predict(train, valid, test, model_params, training_params):
+def fit_predict(train, valid, test, model_params, training_params, fine_tuning=True):
     X_train = train.drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
     y_train = train['isFraud']
 
     X_valid = valid.drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
     y_valid = valid['isFraud']
 
-    X_test = test.drop(['TransactionDT', 'TransactionID'], axis=1)
-
     trn_data = lgb.Dataset(X_train, y_train)
     val_data = lgb.Dataset(X_valid, y_valid)
 
-    monitor = neptune_monitor()
+    if fine_tuning:
+        callbacks = None
+    else:
+        callbacks = [neptune_monitor()]
     clf = lgb.train(model_params, trn_data,
                     training_params['num_boosting_rounds'],
                     valid_sets=[trn_data, val_data],
                     early_stopping_rounds=training_params['early_stopping_rounds'],
-                    callbacks=[monitor])
-    train_preds = clf.predict(X_train, num_iteration=clf.best_iteration)
+                    callbacks=callbacks)
     valid_preds = clf.predict(X_valid, num_iteration=clf.best_iteration)
-    test_preds = clf.predict(X_test, num_iteration=clf.best_iteration)
 
-    return train_preds, valid_preds, test_preds
-
-
-def sample_negative_class(train, fraction, seed=None):
-    train_pos = train[train.isFraud == 1]
-    train_neg = train[train.isFraud == 0].sample(frac=fraction, random_state=seed)
-
-    train = pd.concat([train_pos, train_neg], axis=0)
-    train = train.sort_values('TransactionDT')
-    return train
+    if fine_tuning:
+        return valid_preds
+    else:
+        train_preds = clf.predict(X_train, num_iteration=clf.best_iteration)
+        X_test = test.drop(['TransactionDT', 'TransactionID'], axis=1)
+        test_preds = clf.predict(X_test, num_iteration=clf.best_iteration)
+        return train_preds, valid_preds, test_preds
 
 
 def fmt_preds(y_pred):
