@@ -19,7 +19,7 @@ STATIC_PARAMS = {'objective': 'binary',
                  'seed': 1234
                  }
 
-HPO_PARAMS = {'n_calls': 10,
+HPO_PARAMS = {'n_calls': 100,
               'n_random_starts': 10,
               'base_estimator': 'ET',
               'acq_func': 'EI',
@@ -35,10 +35,6 @@ SPACE = [skopt.space.Real(0.01, 0.5, name='learning_rate', prior='log-uniform'),
          skopt.space.Real(0.1, 1.0, name='feature_fraction', prior='uniform'),
          skopt.space.Real(0.1, 1.0, name='subsample', prior='uniform'),
          ]
-
-
-def to_named_params(params):
-    return ([(dimension.name, param) for dimension, param in zip(SPACE, params)])
 
 
 def main():
@@ -78,7 +74,7 @@ def main():
         best_params = results.x
 
         neptune.send_metric('valid_auc', best_auc)
-        neptune.set_property('best_parameters', best_params)
+        neptune.set_property('best_parameters', str(best_params))
 
         sk_utils.send_best_parameters(results)
         sk_utils.send_plot_convergence(results, channel_name='diagnostics_hpo')

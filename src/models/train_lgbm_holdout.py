@@ -23,7 +23,7 @@ PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
 SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
 MODEL_NAME = 'lgbm'
-NROWS = 50000
+NROWS = None
 SEED = 1234
 
 VALIDATION_PARAMS = {'validation_schema': 'holdout',
