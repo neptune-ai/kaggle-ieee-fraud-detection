@@ -10,15 +10,19 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import KFold
+from src.utils import read_config, check_env_vars
 
-neptune.init()
+check_env_vars()
+CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
 
-FEATURES_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/features/'
+neptune.init(project_qualified_name=CONFIG.project)
+
+FEATURES_DATA_PATH = CONFIG.data.features_data_path
+PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
+SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
 FEATURE_NAME = 'v0'
-PREDICTION_DATA_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions/'
-SUBMISSION_PATH = '/home/jakub/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'
 MODEL_NAME = 'lgbm'
-NROWS = 100000
+NROWS = None
 
 VALIDATION_PARAMS = {'validation_seed': 1234,
                      'validation_schema': 'kfold',
@@ -74,7 +78,7 @@ def fmt_preds(y_pred):
     return np.concatenate((1.0 - y_pred.reshape(-1, 1), y_pred.reshape(-1, 1)), axis=1)
 
 
-if __name__ == '__main__':
+def main():
     print('loading data')
     train_features_path = os.path.join(FEATURES_DATA_PATH, 'train_features_' + FEATURE_NAME + '.csv')
     test_features_path = os.path.join(FEATURES_DATA_PATH, 'test_features_' + FEATURE_NAME + '.csv')
@@ -119,7 +123,7 @@ if __name__ == '__main__':
                                              'test_prediction_{}_{}.csv'.format(FEATURE_NAME, MODEL_NAME))
         submission_path = os.path.join(PREDICTION_DATA_PATH,
                                        'submission_{}_{}.csv'.format(FEATURE_NAME, MODEL_NAME))
-        submission = pd.read_csv(SUBMISSION_PATH)
+        submission = pd.read_csv(SAMPLE_SUBMISSION_PATH)
 
         train = pd.concat([train, pd.DataFrame(out_of_fold, columns=['prediction'])], axis=1)
         test = pd.concat([test, pd.DataFrame(test_preds, columns=['prediction'])], axis=1)
@@ -131,3 +135,7 @@ if __name__ == '__main__':
         neptune.send_artifact(test_predictions_path)
         neptune.send_artifact(submission_path)
         print('experiment finished')
+
+
+if __name__ == '__main__':
+    main()

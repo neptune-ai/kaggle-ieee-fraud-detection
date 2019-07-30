@@ -1,0 +1,7 @@
+project: jakub-czakon/ieee-fraud-detection
+
+data:
+  raw_data_path: '/home/kuba/projects/kaggle/kaggle-ieee-fraud-detection/data/raw'
+  features_data_path: '/home/kuba/projects/kaggle/kaggle-ieee-fraud-detection/data/features'
+  prediction_data_path: '/home/kuba/projects/kaggle/kaggle-ieee-fraud-detection/data/predictions'
+  sample_submission_path: '/home/kuba/projects/kaggle/kaggle-ieee-fraud-detection/data/raw/sample_submission.csv'

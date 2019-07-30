@@ -42,7 +42,7 @@ Just [go to my project](https://ui.neptune.ml/jakub-czakon/ieee-fraud-detection/
 By running:
 
 ```bash
-source make_project
+source Makefile
 ```
 
 conda environment with all the packages required will be created. 
@@ -85,7 +85,7 @@ You can also tweak the hyperparameters and/or validation schema or number of fol
 
 Run:
 ```bash
-python src/models/train_lgbm.py
+python src/models/train_lgbm_holdout.py
 ```
 
 It will create out of fold predictions on train, test and a submission and store them in `data/predictions`
