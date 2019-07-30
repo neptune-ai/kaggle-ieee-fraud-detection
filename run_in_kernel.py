@@ -28,7 +28,12 @@ sys.path.append(REPO_NAME)
 # print('extracting features')
 # feature_extraction_v0.main()
 
+# Model tuning
+from src.models import tune_lgbm_holdout
+print('tuning model')
+tune_lgbm_holdout.main()
+
 # Model training
-from src.models import train_lgbm_holdout
-print('training model')
-train_lgbm_holdout.main()
+# from src.models import train_lgbm_holdout
+# print('training model')
+# train_lgbm_holdout.main()

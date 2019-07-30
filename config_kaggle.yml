@@ -4,4 +4,4 @@ data:
   raw_data_path: '../input/ieee-fraud-detection'
   features_data_path: '../input/features-v0'
   prediction_data_path: ''
-  sample_submission_path: '../input/ieee-fraud-detection/sample_submission.csv'
+  sample_submission_path: '../input/sample_submission.csv'
