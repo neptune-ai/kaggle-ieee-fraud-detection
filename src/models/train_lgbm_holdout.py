@@ -12,6 +12,7 @@ from sklearn.metrics import roc_auc_score
 
 from src.utils import read_config, check_env_vars
 from src.models.utils import sample_negative_class
+from src.features.const import V1_CAT_COLS_FEATURES
 
 check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
@@ -70,6 +71,8 @@ def fit_predict(train, valid, test, model_params, training_params, fine_tuning=T
         callbacks = [neptune_monitor()]
     clf = lgb.train(model_params, trn_data,
                     training_params['num_boosting_rounds'],
+                    feature_name=X_train.columns,
+                    categorical_feature=V1_CAT_COLS_FEATURES,
                     valid_sets=[trn_data, val_data],
                     early_stopping_rounds=training_params['early_stopping_rounds'],
                     callbacks=callbacks)
