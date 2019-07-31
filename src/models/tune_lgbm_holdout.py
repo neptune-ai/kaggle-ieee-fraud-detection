@@ -3,6 +3,7 @@ import os
 import neptune
 from neptunecontrib.api.utils import get_filepaths
 import neptunecontrib.monitoring.skopt as sk_utils
+from neptunecontrib.versioning.data import log_data_version
 import pandas as pd
 import skopt
 from sklearn.metrics import roc_auc_score
@@ -67,6 +68,9 @@ def main():
                                    params=experiment_params,
                                    tags=['skopt', 'forest', 'tune'],
                                    upload_source_files=get_filepaths()):
+        print('logging data version')
+        log_data_version(train_features_path, prefix='train_features_')
+
         results = skopt.forest_minimize(objective, SPACE,
                                         callback=[sk_utils.NeptuneMonitor()],
                                         **HPO_PARAMS)
