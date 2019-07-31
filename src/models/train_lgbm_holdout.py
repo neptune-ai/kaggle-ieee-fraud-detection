@@ -6,12 +6,14 @@ from neptunecontrib.monitoring.lightgbm import neptune_monitor
 from neptunecontrib.versioning.data import log_data_version
 from neptunecontrib.api.utils import get_filepaths
 from neptunecontrib.monitoring.reporting import send_binary_classification_report
+from neptunecontrib.monitoring.utils import pickle_and_send_artifact
 import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 
 from src.utils import read_config, check_env_vars
 from src.models.utils import sample_negative_class
+from src.features.const import V1_CAT_COLS_FEATURES
 
 check_env_vars()
 CONFIG = read_config(config_path=os.getenv('CONFIG_PATH'))
@@ -21,9 +23,10 @@ neptune.init(project_qualified_name=CONFIG.project)
 FEATURES_DATA_PATH = CONFIG.data.features_data_path
 PREDICTION_DATA_PATH = CONFIG.data.prediction_data_path
 SAMPLE_SUBMISSION_PATH = CONFIG.data.sample_submission_path
-FEATURE_NAME = 'v0'
+FEATURE_NAME = 'v1'
 MODEL_NAME = 'lgbm'
 NROWS = None
+LOG_MODEL = True
 SEED = 1234
 
 VALIDATION_PARAMS = {'validation_schema': 'holdout',
@@ -54,7 +57,7 @@ TRAINING_PARAMS = {'nrows': NROWS,
                    }
 
 
-def fit_predict(train, valid, test, model_params, training_params, fine_tuning=True):
+def fit_predict(train, valid, test, model_params, training_params, fine_tuning=False, log_model=False):
     X_train = train.drop(['isFraud', 'TransactionDT', 'TransactionID'], axis=1)
     y_train = train['isFraud']
 
@@ -70,10 +73,15 @@ def fit_predict(train, valid, test, model_params, training_params, fine_tuning=T
         callbacks = [neptune_monitor()]
     clf = lgb.train(model_params, trn_data,
                     training_params['num_boosting_rounds'],
+                    feature_name=X_train.columns.tolist(),
+                    categorical_feature=V1_CAT_COLS_FEATURES,
                     valid_sets=[trn_data, val_data],
                     early_stopping_rounds=training_params['early_stopping_rounds'],
                     callbacks=callbacks)
     valid_preds = clf.predict(X_valid, num_iteration=clf.best_iteration)
+
+    if log_model:
+        pickle_and_send_artifact(clf, 'lightgbm.pkl')
 
     if fine_tuning:
         return valid_preds
@@ -112,13 +120,14 @@ def main():
     with neptune.create_experiment(name='model training',
                                    params=hyperparams,
                                    upload_source_files=get_filepaths(),
-                                   tags=[MODEL_NAME, 'features_'.format(FEATURE_NAME), 'training']):
+                                   tags=[MODEL_NAME, 'features_{}'.format(FEATURE_NAME), 'training']):
         print('logging data version')
         log_data_version(train_features_path, prefix='train_features_')
         log_data_version(test_features_path, prefix='test_features_')
 
         print('training')
-        train_preds, valid_preds, test_preds = fit_predict(train, valid, test, MODEL_PARAMS, TRAINING_PARAMS)
+        train_preds, valid_preds, test_preds = fit_predict(train, valid, test, MODEL_PARAMS, TRAINING_PARAMS,
+                                                           log_model=LOG_MODEL)
 
         print('logging metrics')
         train_auc = roc_auc_score(train['isFraud'], train_preds)

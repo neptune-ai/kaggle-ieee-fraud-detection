@@ -22,7 +22,7 @@ neptune.init(project_qualified_name=CONFIG.project)
 RAW_DATA_PATH = CONFIG.data.raw_data_path
 FEATURES_DATA_PATH = CONFIG.data.features_data_path
 FEATURE_NAME = 'v1'
-NROWS = 1000
+NROWS = None
 
 
 def _split_email(x, colname):

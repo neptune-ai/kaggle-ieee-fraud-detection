@@ -9,6 +9,7 @@ PACKAGES = ['neptune-client', 'neptune-contrib']
 NEPTUNE_API_TOKEN = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vdWkubmVwdHVuZS5tbCIsImFwaV9rZXkiOiJiNzA2YmM4Zi03NmY5LTRjMmUtOTM5ZC00YmEwMzZmOTMyZTQifQ=='
 CONFIG_NAME = 'config_kaggle.yml'
 
+
 # Clone the repository
 print('cloning the repository')
 subprocess.call(['git', 'clone', '-b', REPO_BRANCH, REPO_LOCATION])
@@ -30,6 +31,7 @@ sys.path.append(REPO_NAME)
 
 # Model tuning
 from src.models import tune_lgbm_holdout
+
 print('tuning model')
 tune_lgbm_holdout.main()
 
@@ -37,3 +39,7 @@ tune_lgbm_holdout.main()
 # from src.models import train_lgbm_holdout
 # print('training model')
 # train_lgbm_holdout.main()
+
+# Clean after
+print('removing the repository')
+subprocess.call(['rm', '-rf', REPO_NAME])

@@ -15,3 +15,6 @@ V1_COLS = ['TransactionAmt', 'ProductCD',
 V1_CAT_COLS = ['ProductCD',
                'card4', 'card6',
                'P_emaildomain', 'R_emaildomain']
+V1_CAT_COLS_FEATURES = ['ProductCD',
+                        'card4', 'card6',
+                        'P_emaildomain_first', 'P_emaildomain_rest', 'R_emaildomain_first', 'R_emaildomain_rest']
