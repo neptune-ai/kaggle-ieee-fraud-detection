@@ -9,6 +9,7 @@ PACKAGES = ['neptune-client', 'neptune-contrib']
 NEPTUNE_API_TOKEN = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vdWkubmVwdHVuZS5tbCIsImFwaV9rZXkiOiJiNzA2YmM4Zi03NmY5LTRjMmUtOTM5ZC00YmEwMzZmOTMyZTQifQ=='
 CONFIG_NAME = 'config_kaggle.yml'
 
+
 # Clone the repository
 print('cloning the repository')
 subprocess.call(['git', 'clone', '-b', REPO_BRANCH, REPO_LOCATION])
