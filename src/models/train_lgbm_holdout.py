@@ -71,7 +71,7 @@ def fit_predict(train, valid, test, model_params, training_params, fine_tuning=T
         callbacks = [neptune_monitor()]
     clf = lgb.train(model_params, trn_data,
                     training_params['num_boosting_rounds'],
-                    feature_name=X_train.columns,
+                    feature_name=X_train.columns.tolist(),
                     categorical_feature=V1_CAT_COLS_FEATURES,
                     valid_sets=[trn_data, val_data],
                     early_stopping_rounds=training_params['early_stopping_rounds'],
