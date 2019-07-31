@@ -30,6 +30,7 @@ sys.path.append(REPO_NAME)
 
 # Model tuning
 from src.models import tune_lgbm_holdout
+
 print('tuning model')
 tune_lgbm_holdout.main()
 
@@ -37,3 +38,7 @@ tune_lgbm_holdout.main()
 # from src.models import train_lgbm_holdout
 # print('training model')
 # train_lgbm_holdout.main()
+
+# Clean after
+print('removing the repository')
+subprocess.call(['rm', '-rf', REPO_NAME])
