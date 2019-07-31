@@ -1,8 +1,8 @@
-project: shared/showroom
+project: jakub-czakon/ieee-fraud-detection
 
 data:
   raw_data_path: '../input/ieee-fraud-detection'
-  features_data_path: '../input/features-extraction-v1'
-#  features_data_path: ''
+#  features_data_path: '../input/features-extraction-v1'
+  features_data_path: ''
   prediction_data_path: ''
   sample_submission_path: '../input/sample_submission.csv'
