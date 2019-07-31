@@ -47,10 +47,10 @@ MODEL_PARAMS = {'num_leaves': 256,
                 }
 
 TRAINING_PARAMS = {'nrows': NROWS,
-                   'negative_sample_fraction': 0.1,
+                   'negative_sample_fraction': 1.0,
                    'negative_sample_seed': SEED,
-                   'num_boosting_rounds': 5000,
-                   'early_stopping_rounds': 200
+                   'num_boosting_rounds': 200,  # 5000,
+                   'early_stopping_rounds': 20  # 200
                    }
 
 
