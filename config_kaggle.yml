@@ -2,6 +2,7 @@ project: shared/showroom
 
 data:
   raw_data_path: '../input/ieee-fraud-detection'
-  features_data_path: '../input/features-v0'
+#  features_data_path: '../input/features-v0'
+  features_data_path: ''
   prediction_data_path: ''
   sample_submission_path: '../input/sample_submission.csv'
