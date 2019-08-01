@@ -25,14 +25,14 @@ os.environ["NEPTUNE_API_TOKEN"] = NEPTUNE_API_TOKEN
 sys.path.append(REPO_NAME)
 
 # Feature extraction
-# from src.features import feature_extraction_v0
-# print('extracting features')
-# feature_extraction_v0.main()
+from src.features import feature_extraction_v0
+print('extracting features')
+feature_extraction_v0.main()
 
 # Model tuning
-from src.models import tune_lgbm_holdout
-print('tuning model')
-tune_lgbm_holdout.main()
+# from src.models import tune_lgbm_holdout
+# print('tuning model')
+# tune_lgbm_holdout.main()
 
 # Model training
 # from src.models import train_lgbm_holdout
