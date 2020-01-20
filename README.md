@@ -91,6 +91,4 @@ python src/models/train_lgbm_holdout.py
 It will create out of fold predictions on train, test and a submission and store them in `data/predictions`
 
 ## Questions
-You can ask in [kaggle discussion]() or on our [spectrum chat](https://spectrum.chat/neptune-community?tab=posts)
-
-
+You can ask on our [spectrum chat](https://spectrum.chat/neptune-community).
