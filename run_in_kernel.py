@@ -2,7 +2,7 @@ import os
 import sys
 import subprocess
 
-REPO_LOCATION = 'https://github.com/neptune-ml/kaggle-ieee-fraud-detection.git'
+REPO_LOCATION = 'https://github.com/neptune-ai/kaggle-ieee-fraud-detection.git'
 REPO_NAME = 'kaggle-ieee-fraud-detection'
 REPO_BRANCH = 'master'
 PACKAGES = ['neptune-client', 'neptune-contrib']

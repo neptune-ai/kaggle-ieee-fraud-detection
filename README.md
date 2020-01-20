@@ -36,7 +36,7 @@ As an added bonus you can learn how to add live monitoring for lightgbm model.
 ![image8](https://gist.githubusercontent.com/jakubczakon/f754769a39ea6b8fa9728ede49b9165c/raw/d0c079a7076c2292d38ab78cfa0947bdfc4d35b5/kaggle_charts.png)
 
 And the best part is that all of those experiments can be shared and discussed with everyone you want in Neptune.
-Just [go to my project](https://ui.neptune.ml/jakub-czakon/ieee-fraud-detection/experiments) and see for yourself. 
+Just [go to my project](https://ui.neptune.ai/jakub-czakon/ieee-fraud-detection/experiments) and see for yourself. 
 
 ## Installation
 By running:
